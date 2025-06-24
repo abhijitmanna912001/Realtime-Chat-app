@@ -1,11 +1,12 @@
 import { create } from "zustand";
 
-const defaultTheme = localStorage.getItem("theme") || "coffee";
-
-export const useThemeStore = create((set) => ({
-  theme: defaultTheme,
-  setTheme: (newTheme) => {
-    localStorage.setItem("theme", newTheme);
-    set({ theme: newTheme });
-  },
-}));
+export const useThemeStore = create((set) => {
+  const localTheme = localStorage.getItem("theme") || "dark";
+  return {
+    theme: localTheme,
+    setTheme: (newTheme) => {
+      localStorage.setItem("theme", newTheme);
+      set({ theme: newTheme });
+    },
+  };
+});
