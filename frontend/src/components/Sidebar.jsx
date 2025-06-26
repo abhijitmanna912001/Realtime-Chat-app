@@ -32,7 +32,7 @@ const Sidebar = () => {
             onClick={() => setSelectedUser(user)}
             className={`
               w-full p-3 flex items-center gap-3
-              hover:bg-base-300 transition-colors
+              hover:bg-base-300 transition-colors cursor-pointer
               ${
                 selectedUser?._id === user._id
                   ? "bg-base-300 ring-1 ring-base-300"
@@ -44,7 +44,7 @@ const Sidebar = () => {
               <img
                 src={user.profilePic || "/avatar.png"}
                 alt={user.name}
-                className="size-12 object-cover rounded-full"
+                className="size-12 object-cover rounded-full cursor-pointer"
               />
               {onlineUsers.includes(user._id) && (
                 <span
