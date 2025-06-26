@@ -18,5 +18,8 @@
   "bugs": {
     "url": "https://github.com/abhijitmanna912001/Realtime-Chat-app/issues"
   },
-  "homepage": "https://github.com/abhijitmanna912001/Realtime-Chat-app#readme"
+  "homepage": "https://github.com/abhijitmanna912001/Realtime-Chat-app#readme",
+  "engines": {
+    "node": "20.x"
+  }
 }
