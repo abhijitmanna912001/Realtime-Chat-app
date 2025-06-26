@@ -1,11 +1,12 @@
 import toast from "react-hot-toast";
 import { create } from "zustand";
 import { axiosInstance } from "../lib/axios";
+import { useAuthStore } from "./useAuthStore";
 
 export const useChatStore = create((set, get) => ({
   messages: [],
   users: [],
-  selectedUser: null,
+  selectedUser: JSON.parse(localStorage.getItem("selectedUser")) || null,
   isUsersLoading: false,
   isMessagesLoading: false,
 
@@ -46,5 +47,42 @@ export const useChatStore = create((set, get) => ({
     }
   },
 
-  setSelectedUser: (selectedUser) => set({ selectedUser }),
+  subscribeToMessages: () => {
+    const { selectedUser } = get();
+    const socket = useAuthStore.getState().socket;
+
+    if (!selectedUser || !socket || typeof socket.on !== "function") {
+      console.warn("Socket not ready or invalid in subscribeToMessages");
+      return;
+    }
+
+    console.log("✅ Subscribing to newMessage for user:", selectedUser._id);
+
+    socket.on("newMessage", (newMessage) => {
+      console.log("📩 newMessage received on socket:", newMessage);
+
+      const isFromSelectedUser = newMessage.senderId === selectedUser._id;
+      if (!isFromSelectedUser) return;
+
+      set({
+        messages: [...get().messages, newMessage],
+      });
+    });
+  },
+
+  unsubscribeFromMessages: () => {
+    const socket = useAuthStore.getState().socket;
+
+    if (!socket || typeof socket.off !== "function") {
+      console.warn("Socket not ready in unsubscribeFromMessages");
+      return;
+    }
+
+    socket.off("newMessage");
+  },
+
+  setSelectedUser: (user) => {
+    localStorage.setItem("selectedUser", JSON.stringify(user));
+    set({ selectedUser: user });
+  },
 }));
