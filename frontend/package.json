@@ -13,7 +13,6 @@
     "@tailwindcss/vite": "^4.1.10",
     "@vitejs/plugin-react": "^4.6.0",
     "axios": "^1.10.0",
-    "chat-app": "file:..",
     "daisyui": "^5.0.43",
     "lucide-react": "^0.515.0",
     "prop-types": "^15.8.1",
