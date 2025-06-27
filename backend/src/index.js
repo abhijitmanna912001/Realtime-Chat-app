@@ -24,16 +24,19 @@ app.use(express.json({ limit: "50mb" }));
 app.use(express.urlencoded({ limit: "50mb", extended: true }));
 app.use(cookieParser());
 
+console.log("📌 About to register auth routes");
 app.use("/api/auth", authRoutes);
+console.log("📌 About to register messages routes");
 app.use("/api/messages", messageRoutes);
+console.log("📌 About to register static fallback");
 
-if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname, "../frontend/dist")));
+// if (process.env.NODE_ENV === "production") {
+//   app.use(express.static(path.join(__dirname, "../frontend/dist")));
 
-  app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname, "../frontend", "dist", "index.html"));
-  });
-}
+//   app.get("*", (req, res) => {
+//     res.sendFile(path.join(__dirname, "../frontend", "dist", "index.html"));
+//   });
+// }
 
 server.listen(PORT, () => {
   console.log(`Server running on port: ${PORT}`);
