@@ -15,7 +15,10 @@ const __dirname = path.resolve();
 
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: [
+      "http://localhost:5173", // ✅ for local dev
+      "https://realtime-chat-app-iig0.onrender.com", // ✅ your deployed frontend
+    ],
     credentials: true,
   })
 );
